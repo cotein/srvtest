@@ -24,12 +24,12 @@ class WebHookOrderWasReceived implements ShouldBroadcast
     
     public function broadcastOn()
     {   
-        return new Channel('hook-order-channel');
+        return new Channel('order-channel');
     }
 
     public function broadcastAs()
     {
-        return 'Web-Hook-Order-Event';
+        return 'Web-Order-Event';
     }
 
     public function broadcastWith()

@@ -23,12 +23,12 @@ class WebHookQuestionWasReceived implements ShouldBroadcast
 
     public function broadcastOn()
     {   
-        return new Channel('hook-question-channel');
+        return new Channel('question-channel');
     }
 
     public function broadcastAs()
     {
-        return 'Web-Hook-question-Event';
+        return 'Web-question-Event';
     }
 
     public function broadcastWith()
