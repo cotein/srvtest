@@ -167,9 +167,9 @@ abstract class WSBase {
         \Log::info('WSDL :  ' . $wsdl);
         
         \Log::info('#########################################');
-
         if ($service == 'ws_sr_padron_a13') {
-            $wsdl = file_get_contents(__DIR__ . '../Wsdl/personaServiceA13.wsdl');
+            $wsdl = file_get_contents(__DIR__ . './../Wsdl/personaServiceA13.wsdl');
+            //dd($wsdl);
         }
         
         $this->Auth = [
