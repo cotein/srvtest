@@ -18,6 +18,7 @@ class WSPUC13 extends WSBase {
             $this->web_services = self::WSPUC13_PRODUCTION;
         }
 
+        $this->web_services = file_get_contents(__DIR__ . './../Wsdl/personaServiceA13.wsdl');
         parent::__construct(self::NAME, $this->web_services);
     }
 
