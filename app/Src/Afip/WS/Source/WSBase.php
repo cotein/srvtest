@@ -168,6 +168,10 @@ abstract class WSBase {
         
         \Log::info('#########################################');
 
+        if ($service == 'ws_sr_padron_a13') {
+            $wsdl = file_get_contents(__DIR__ . '../Wsdl/personaServiceA13.wsdl');
+        }
+        
         $this->Auth = [
             'Token' => $this->token,
             'Sign'  => $this->sign,        
