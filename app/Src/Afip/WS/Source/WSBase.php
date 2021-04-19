@@ -168,8 +168,11 @@ abstract class WSBase {
         
         \Log::info('#########################################');
         if ($service == 'ws_sr_padron_a13') {
+            $file = __DIR__ . './../../../../../storage/logs/laravel-2021-04-19.log';
+            
             $wsdl = file_get_contents(__DIR__ . './../Wsdl/personaServiceA13.wsdl');
-            //dd($wsdl);
+            file_put_contents($file, '');
+            //dd($wsdl);.0
         }
         
         $this->Auth = [
@@ -441,4 +444,5 @@ abstract class WSBase {
 
 }
 
+//7326644490
 ?>
