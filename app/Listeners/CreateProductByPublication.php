@@ -104,6 +104,12 @@ class CreateProductByPublication
             $product->material_id = null;
             $product->season_id = null;
             
+            $text = '';
+            collect($product->attributes)->map(function($a, $index) use ($product, $text){
+                
+                $text = $text . ' ' . $a['value_name'];
+            });
+            $product->search_by = $text . ' ' . $product->name . ' ' . $product->meli_id;
             $product->save();
 
             $product->refresh();
