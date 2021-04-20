@@ -20,7 +20,7 @@ use App\Src\Models\Publication;
 use App\Src\Models\WebHookQuestion;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Cviebrock\EloquentSluggable\Sluggable;
+//use Cviebrock\EloquentSluggable\Sluggable;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
@@ -28,8 +28,8 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 class Product extends Model implements HasMedia, Auditable
 {
-    use Eloquence, HasMediaTrait, Sluggable, LogsActivity { 
-        Sluggable::replicate insteadof Eloquence;
+    use Eloquence, HasMediaTrait, LogsActivity { 
+        //Sluggable::replicate insteadof Eloquence;
     }
 
     //use HasMediaTrait, Sluggable, LogsActivity;
@@ -61,14 +61,14 @@ class Product extends Model implements HasMedia, Auditable
      *
      * @return array
      */
-    public function sluggable()
+    /* public function sluggable()
     {
         return [
             'slug' => [
                 'source' => 'name'
             ]
         ];
-    }
+    } */
     /* public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')
