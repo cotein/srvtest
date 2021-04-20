@@ -38,8 +38,8 @@ class FECAEDetRequestTransformer extends BaseTransformer{
     }
 
     static ImpTotal(ImpTotal){
-        let imp = ImpTotal.toFixed(2);
-        return parseFloat(imp);
+        //let imp = ImpTotal.toFixed(2);
+        return parseFloat(ImpTotal);
     }
 
     static ImpTotConc(){
