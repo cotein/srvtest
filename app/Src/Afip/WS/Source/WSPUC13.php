@@ -34,7 +34,6 @@ class WSPUC13 extends WSBase {
         try {
 
             $result = $this->client->getIdPersonaListByDocumento($consulta);
-            \Log::info('WSPUC13->LINEA 37 ' . $result);
             if (is_soap_fault($result)) 
             
                 throw new OwnerSoapFaultException; 

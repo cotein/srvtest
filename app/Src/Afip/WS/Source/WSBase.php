@@ -188,7 +188,11 @@ abstract class WSBase {
         ];
 
         try {
-            $this->client = new \SoapClient($wsdl);
+            $this->client = new \SoapClient($wsdl, [
+                'exceptions'=>true,
+                'cache_wsdl'=>WSDL_CACHE_NONE,
+                'trace'=>1
+            ]);
         } catch (\Exception $e) {
             \Log::error("Error en try catch WSBASE" . $e->getMessage() . ' - ' . $e->getCode() . ' WsbService : ' . $wsdl);
             activity("Error")->withProperties(
