@@ -38,7 +38,8 @@ class FECAEDetRequestTransformer extends BaseTransformer{
     }
 
     static ImpTotal(ImpTotal){
-        return parseFloat(ImpTotal);
+        let imp = ImpTotal.toFixed(2);
+        return parseFloat(imp);
     }
 
     static ImpTotConc(){
@@ -46,20 +47,23 @@ class FECAEDetRequestTransformer extends BaseTransformer{
     }
 
     static ImpNeto(data){
-        return parseFloat(data)
+        let imp = data.toFixed(2);
+            return parseFloat(imp);
     }
 
     static ImpOpEx(data){
 
         if (data) {
-            return parseFloat(data);
+            let imp = data.toFixed(2);
+            return parseFloat(imp);
         }
         return 0;
     }
 
     static ImpTrib(data){
         if (data) {
-            return parseFloat(data);
+            let imp = data.toFixed(2);
+            return parseFloat(imp);
         }
         return 0;
     }
@@ -74,8 +78,8 @@ class FECAEDetRequestTransformer extends BaseTransformer{
     }
 
     static ImpIVA(data){
-        //return data.toFixed(2);
-        return parseFloat(data);
+        let imp = data.toFixed(2);
+        return parseFloat(imp);
     }
 
     static FechServDesde(data){
