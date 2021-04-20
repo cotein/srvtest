@@ -98,7 +98,12 @@ abstract class WSBase {
     {
         $this->cuit = env('WSBASE_CUIT');
         $this->cuitRepresentada = env('WSBASE_CUIT_REPRESENTADA');
-        //dd($service, $wsdl);
+        \Log::info('#########################################');
+        \Log::info('Constructor WSBASE');
+        \Log::info('$this->cuit = ' . $this->cuit );
+        \Log::info('$this->cuitRepresentada = ' . $this->cuitRepresentada );
+        \Log::info('Servicio = ' . $wsdl);
+        \Log::info('#########################################');
         $this->testingOrProductionWSDL = self::testingOrProductionWSDL($wsdl);
         
         ini_set("soap.wsdl_cache_enabled", "0"); 
@@ -168,10 +173,10 @@ abstract class WSBase {
         
         \Log::info('#########################################');
         if ($service == 'ws_sr_padron_a13') {
-            $file = __DIR__ . './../../../../../storage/logs/laravel-2021-04-19.log';
+            //$file = __DIR__ . './../../../../../storage/logs/laravel-2021-04-19.log';
             
             //$wsdl = file_get_contents(__DIR__ . './../Wsdl/personaServiceA13.wsdl');
-            file_put_contents($file, '');
+            //file_put_contents($file, '');
             //dd($wsdl);.0
         }
         
