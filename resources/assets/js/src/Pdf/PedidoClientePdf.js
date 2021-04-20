@@ -233,8 +233,8 @@ class PedidoClientePdf extends BasePdf {
                         270,
                     );
                     //this.addLogo((data.company.logo_base64));
-                    this.pdf.addImage(LogoPiamond.base_64(), 'PNG', 10, 6, 77, 29);
-                    this.pdf.addImage(BackGroundWater.base_64(), 'PNG', 10, 110, 190, 100);
+                    //this.pdf.addImage(LogoPiamond.base_64(), 'PNG', 10, 6, 77, 29);
+                    //this.pdf.addImage(BackGroundWater.base_64(), 'PNG', 10, 110, 190, 100);
                     this.leftVerticalBorder();
                     this.rightVerticalBorder();
                     this.topBorder();
@@ -266,8 +266,8 @@ class PedidoClientePdf extends BasePdf {
                     this.invoice_original(title);
                     if (split_index == 0 && data.customer_type_id == 1 && index_title == 0) {
                             
-                        this.WhatsappNumber();
-                        this.pdf.addImage(Whatsapp.base_64(), 'PNG', 77, 180, 50, 50);
+                        /* this.WhatsappNumber();
+                        this.pdf.addImage(Whatsapp.base_64(), 'PNG', 77, 180, 50, 50); */
                     }
                     this.details(split, data.customer_type_id);
                     this.write_text(
@@ -292,8 +292,8 @@ class PedidoClientePdf extends BasePdf {
 
         });
 
-        this.pdf.addImage(WarrantyCertificate.base_64(), 'PNG', 10, 10, 190, 260);
-        this.pdf.addImage(WarrantyCertificate.base_64(), 'PNG', 10, 10, 190, 260);
+        /* this.pdf.addImage(WarrantyCertificate.base_64(), 'PNG', 10, 10, 190, 260);
+        this.pdf.addImage(WarrantyCertificate.base_64(), 'PNG', 10, 10, 190, 260); */
     }
 }
 
