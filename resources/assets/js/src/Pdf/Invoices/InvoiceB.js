@@ -93,7 +93,7 @@ class InvoiceB extends InvoiceTypeB {
                     270,
                 );
                 //this.addLogo((data.company.logo_base64));
-                this.pdf.addImage(LogoPiamond.base_64(), 'PNG', 10, 6, 77, 29);
+                //this.pdf.addImage(LogoPiamond.base_64(), 'PNG', 10, 6, 77, 29);
                 if (split_collection.count() == index + 1) {
                     
                     this.totals(data.totals);
@@ -144,7 +144,7 @@ class InvoiceB extends InvoiceTypeB {
                 this.invoice_type(data.invoice_letter);
                 this.dividerHeader();
                 this.code201();
-                this.pdf.addImage(BackGroundWater.base_64(), 'PNG', 10, 110, 190, 100);
+                //this.pdf.addImage(BackGroundWater.base_64(), 'PNG', 10, 110, 190, 100);
                 this.pay_condition();
                 this.horizontalLine(this.margin_left,this.first_line_height,this.margin_right,this.first_line_height);
                 this.horizontalLine(this.margin_left,this.first_line_height+10,this.margin_right,this.first_line_height+10);

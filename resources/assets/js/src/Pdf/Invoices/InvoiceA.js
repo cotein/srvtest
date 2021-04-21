@@ -196,7 +196,7 @@ class InvoiceA extends InvoiceTypeA {
                 this.invoice_type(data.invoice_letter);
                 this.dividerHeader();
                 this.code201();
-                this.pdf.addImage(BackGroundWater.base_64(), 'PNG', 10, 110, 190, 100);
+                //this.pdf.addImage(BackGroundWater.base_64(), 'PNG', 10, 110, 190, 100);
                 this.pay_condition();
                 this.horizontalLine(this.margin_left,this.first_line_height,this.margin_right,this.first_line_height);
                 this.horizontalLine(this.margin_left,this.first_line_height+10,this.margin_right,this.first_line_height+10);
