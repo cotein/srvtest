@@ -5,6 +5,7 @@ namespace App\Transformers\Afip;
 use App\Src\Models\Voucher;
 use App\Src\Models\Customer;
 use App\Src\Tools\StdClassTool;
+use Illuminate\Support\Facades\Log;
 use League\Fractal\TransformerAbstract;
 
 class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
@@ -50,6 +51,11 @@ class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
     public function transform($responseFromAfip)
     {
         $c = collect($responseFromAfip);
+        \Log::alert("----------------------");
+        \Log::alert("######################");
+        \Log::alert("responseFromAfip : " . $c->toJson());
+        \Log::alert("######################");
+        \Log::alert("######################");
 
         $FECAESolicitarResult = collect($c->get('FECAESolicitarResult'));
 
