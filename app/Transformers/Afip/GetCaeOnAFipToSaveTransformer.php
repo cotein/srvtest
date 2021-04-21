@@ -60,7 +60,11 @@ class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
         $FECAESolicitarResult = collect($c->get('FECAESolicitarResult'));
 
         $FeDetResp = $FECAESolicitarResult->get('FeDetResp');
-
+        \Log::alert("----------------------");
+        \Log::alert("######################");
+        \Log::alert("FeDetResp : " . collect($FeDetResp)->toJson());
+        \Log::alert("######################");
+        \Log::alert("######################");
         $FeCabResp = $FECAESolicitarResult->get('FeCabResp');
 
         $customer = Customer::where('number', $FeDetResp['FECAEDetResponse']['DocNro'])->get();
