@@ -68,13 +68,13 @@ class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
         $FeCabResp = $FECAESolicitarResult->get('FeCabResp');
 
         $customer = Customer::where('number', $FeDetResp['FECAEDetResponse']['DocNro'])->get();
-        dd($customer);
+        //dd($customer);
         /* if (array_key_exists("cuit", $responseFromAfip)) {
             $customer = Customer::where('number', $responseFromAfip['cuit'])->get();
         } */
-        if ($customer->isEmpty()) {
+        /* if ($customer->isEmpty()) {
             $customer = Customer::where('number', $responseFromAfip['cuit'])->get();
-        }
+        } */
 
         $responseFromAfip = StdClassTool::toArray($responseFromAfip);
 
