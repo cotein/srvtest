@@ -67,25 +67,23 @@ class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
         \Log::alert("######################");
         $FeCabResp = $FECAESolicitarResult->get('FeCabResp');
 
-        $customer = Customer::where('number', $FeDetResp['FECAEDetResponse']['DocNro'])->get();
-        //dd($customer);
-        /* if (array_key_exists("cuit", $responseFromAfip)) {
-            $customer = Customer::where('number', $responseFromAfip['cuit'])->get();
-        } */
-        /* if ($customer->isEmpty()) {
-            $customer = Customer::where('number', $responseFromAfip['cuit'])->get();
-        } */
-
-        $responseFromAfip = StdClassTool::toArray($responseFromAfip);
-
         $cbte_tipo = str_pad(
             $FeCabResp['CbteTipo'], 
             3, 
             '0', 
             STR_PAD_LEFT
         );
+
+        $customer = Customer::where('number', $FeDetResp['FECAEDetResponse']['DocNro'])->get();
+        \Log::alert("customer : " . $customer->toJson());
+        //dd($customer->first()->id, $customer->count());
+        \Log::alert("----------------------");
+        \Log::alert("######################");
+        \Log::alert("customer->first()->id : " . $customer->first()->id);
+        \Log::alert("######################");
+        \Log::alert("----------------------");
         
-        return [
+        $result = [
             //'customer_id' => 3,
             'customer_id' => $customer->first()->id,
             'company_id' => auth()->user()->company_id,
@@ -104,7 +102,9 @@ class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
              */
             'status_id' => 1,
             'user_id' => auth()->user()->id,
-            'afip_data' => $responseFromAfip,
+            'afip_data' => $c->toArray(),
         ];
+
+        return $result;
     }
 }

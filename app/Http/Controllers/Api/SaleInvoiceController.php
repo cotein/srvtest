@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Src\Models\Status;
 use App\Src\Models\Receipt;
+use App\Src\Models\Customer;
 use Illuminate\Http\Request;
 use App\Src\Models\SaleInvoice;
 use App\Http\Controllers\Controller;
@@ -49,6 +50,44 @@ class SaleInvoiceController extends Controller
         return response()->json($response, 200);
     }
 
+    public function voucher_id($value)
+    {
+        switch ($value) {
+            case '001':
+                return 1;
+            case '002':
+                return 2;    
+            case '003':
+                return 3;    
+            case '004':
+                return 4;    
+            case '005':
+                return 5;    
+            case '006':
+                return 6;    
+            case '007':
+                return 7;    
+            case '008':
+                return 8;    
+            case '009':
+                return 9;    
+            case '010':
+                return 10;    
+            case '011':
+                return 11;    
+            case '012':
+                return 12;    
+            case '013':
+                return 13;    
+            case '201':
+                return 92;    
+            case '202':
+                return 93;    
+            case '203':
+                return 94;    
+        }
+    }
+
     public function store()
     {
         //dd(request()->all());
@@ -56,8 +95,44 @@ class SaleInvoiceController extends Controller
         ->withProperties('SaleInvoice')
         ->log(collect(request()->invoice)->toJson());
         //dd(request()->all());
-        $bill_data = fractal(request()->invoice, new GetCaeOnAFipToSaveTransformer())->toArray()['data'][0];
-        //dd( request()->invoices);
+
+        $c = collect(request()->invoice['afip_invoice']['FECAESolicitarResult']);
+
+        $FECAESolicitarResult = collect(request()->invoice['afip_invoice']['FECAESolicitarResult']);
+
+        $FeCabResp = $FECAESolicitarResult->get('FeCabResp');
+        $FeDetResp = $FECAESolicitarResult->get('FeDetResp');
+
+        $cbte_tipo = str_pad(
+            $FeCabResp['CbteTipo'], 
+            3, 
+            '0', 
+            STR_PAD_LEFT
+        );
+
+        $customer = Customer::where('number', $FeDetResp['FECAEDetResponse']['DocNro'])->get();
+        
+        $bill_data = [
+            'customer_id' => $customer->first()->id,
+            'company_id' => auth()->user()->company_id,
+            'doc_nro' => $FeDetResp['FECAEDetResponse']['DocNro'],
+            'voucher_id' => $this->voucher_id($cbte_tipo),
+            'pto_vta' => $FeCabResp['PtoVta'],
+            'cbte_desde' => $FeDetResp['FECAEDetResponse']['CbteDesde'],
+            'cbte_hasta' => $FeDetResp['FECAEDetResponse']['CbteHasta'],
+            'cbte_fch' => $FeDetResp['FECAEDetResponse']['CbteFch'],
+            'cae' => $FeDetResp['FECAEDetResponse']['CAE'],
+            'cae_fch_vto' =>$FeDetResp['FECAEDetResponse']['CAEFchVto'],
+            /**
+             * //TODO Verificar el estado del comprobante
+             * al momento de crearlo se puede saldar, o dejar
+             * en cuenta corriente
+             */
+            'status_id' => 1,
+            'user_id' => auth()->user()->id,
+            'afip_data' => collect(request()->invoice['afip_invoice']),
+        ];
+
         $si = $this->sirepo->create($bill_data, request()->invoice, request()->invoice['products'], request()->invoices, request()->invoice['percep_iibb']);
         
         return response()->json($si, 201);
