@@ -5,6 +5,7 @@ namespace App\Transformers\Afip;
 use App\Src\Models\Voucher;
 use App\Src\Models\Customer;
 use App\Src\Tools\StdClassTool;
+use Illuminate\Support\Facades\Log;
 use League\Fractal\TransformerAbstract;
 
 class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
@@ -50,23 +51,21 @@ class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
     public function transform($responseFromAfip)
     {
         $c = collect($responseFromAfip);
+        \Log::alert("----------------------");
+        \Log::alert("######################");
+        \Log::alert("responseFromAfip : " . $c->toJson());
+        \Log::alert("######################");
+        \Log::alert("######################");
 
         $FECAESolicitarResult = collect($c->get('FECAESolicitarResult'));
 
         $FeDetResp = $FECAESolicitarResult->get('FeDetResp');
-
+        \Log::alert("----------------------");
+        \Log::alert("######################");
+        \Log::alert("FeDetResp : " . collect($FeDetResp)->toJson());
+        \Log::alert("######################");
+        \Log::alert("######################");
         $FeCabResp = $FECAESolicitarResult->get('FeCabResp');
-
-        $customer = Customer::where('number', $FeDetResp['FECAEDetResponse']['DocNro'])->get();
-
-        /* if (array_key_exists("cuit", $responseFromAfip)) {
-            $customer = Customer::where('number', $responseFromAfip['cuit'])->get();
-        } */
-        if ($customer->isEmpty()) {
-            $customer = Customer::where('number', $responseFromAfip['cuit'])->get();
-        }
-
-        $responseFromAfip = StdClassTool::toArray($responseFromAfip);
 
         $cbte_tipo = str_pad(
             $FeCabResp['CbteTipo'], 
@@ -74,8 +73,17 @@ class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
             '0', 
             STR_PAD_LEFT
         );
+
+        $customer = Customer::where('number', $FeDetResp['FECAEDetResponse']['DocNro'])->get();
+        \Log::alert("customer : " . $customer->toJson());
+        //dd($customer->first()->id, $customer->count());
+        \Log::alert("----------------------");
+        \Log::alert("######################");
+        \Log::alert("customer->first()->id : " . $customer->first()->id);
+        \Log::alert("######################");
+        \Log::alert("----------------------");
         
-        return [
+        $result = [
             //'customer_id' => 3,
             'customer_id' => $customer->first()->id,
             'company_id' => auth()->user()->company_id,
@@ -94,7 +102,9 @@ class GetCaeOnAFipToSaveTransformer extends TransformerAbstract
              */
             'status_id' => 1,
             'user_id' => auth()->user()->id,
-            'afip_data' => $responseFromAfip,
+            'afip_data' => $c->toArray(),
         ];
+
+        return $result;
     }
 }

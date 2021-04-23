@@ -21,15 +21,14 @@ class WebHookOrderWasReceived implements ShouldBroadcast
         $this->order = $order;
     }
 
-    
     public function broadcastOn()
     {   
-        return new Channel('order-channel');
+        return new Channel('hook-order-channel');
     }
 
     public function broadcastAs()
     {
-        return 'Web-Order-Event';
+        return 'Web-Hook-Order-Event';
     }
 
     public function broadcastWith()

@@ -150,15 +150,16 @@ import toast_mixin from './../../../mixins/toast-mixin';
                 console.log('########################');
                 console.log(message);
                 console.log('########################');
-                if(message.message.from.user_id != "17220993")
-                {
-                    this.$store.commit('ADD_RECEIVE_MESSAGE', message)
-                    this.info_message(`${message.message.text.plain}`, `Nuevo mensaje de ${message.message.from.name}`, 4000, 'bottomCenter');
-                }
+                
+                this.$store.commit('ADD_RECEIVE_MESSAGE', message)
+                this.info_message(`${message.message.text.plain}`, `Nuevo mensaje de ${message.message.from.name}`, 4000, 'bottomCenter');
             });
             
             window.Echo.channel('hook-order-channel')
             .listen('.Web-Hook-Order-Event', (order) => {
+                console.log('########################');
+                console.log(order);
+                console.log('########################');
                 this.success_message('Se ha registrado una nueva Orden de compra', 'Órdenes de compra', 4000, 'bottomCenter');
                 this.$store.commit('SET_NEW_ORDER_NOTIFICATION', order.order);
             });
