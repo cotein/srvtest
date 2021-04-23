@@ -41,4 +41,29 @@ class MeliMessage extends MiMeli
 
         return $response->getBody()->getContents();
     }
+
+    public function get_messages_by_order()
+    {
+        $client = new Client([
+
+            'base_uri' => 'https://api.mercadolibre.com',
+
+            'timeout' => 2.0
+
+        ]);
+
+        $token = auth()->user()->company->mercadoLibre->meli_token;
+
+        $url = '/messages/orders/'.$order_id . '?access_token='.$token;
+
+        $response = $client->request('POST', $url, [
+            'headers' => [
+                'cache-control: no-cache',
+                'content-type: application/json'
+            ],
+            
+        ]);
+
+        return $response->getBody()->getContents();
+    }
 }
