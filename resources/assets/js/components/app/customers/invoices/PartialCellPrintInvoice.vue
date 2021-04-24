@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import InvoiceA from './../../../../src/Pdf/Invoices/InvoiceA';
-import InvoiceB from './../../../../src/Pdf/Invoices/InvoiceB';
+
 import PartialCellDeleteInvoice  from './PartialCellDeleteInvoice';
 import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTransformer';
 import {mapGetters} from 'vuex';
@@ -28,6 +27,7 @@ import {mapGetters} from 'vuex';
             return {
                 token : null,
                 print_spinner : false,
+                PdfFactory : null,
             }
         },
 
@@ -82,12 +82,12 @@ import {mapGetters} from 'vuex';
                             data.bill_type == 94
                             ) {
                             
-                            let pdf = new InvoiceA();
+                            let pdf = this.PdfFactory.createInstance('InvoiceA');
                             pdf.structure_scaffold(data);
                             pdf.print();
                         }else{
                             //InvoiceB funciona para las facturas B y C
-                            let pdf = new InvoiceB();
+                            let pdf = this.PdfFactory.createInstance('InvoiceB');
                             pdf.structure_scaffold(data);
                             pdf.print();
                         }
@@ -109,8 +109,7 @@ import {mapGetters} from 'vuex';
         },
 
         mounted() {
-            console.log('partial cell print invoice');
-           console.log(this.data);
+           this.PdfFactory = new PdfFactory();
         },
        
     }

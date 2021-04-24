@@ -18,7 +18,7 @@
 import { collect } from 'collect.js';
     import {mapGetters} from 'vuex';
     import zero_left from './../../../mixins/zero-left';
-    import PedidoClientePdf from './../../../src/Pdf/PedidoClientePdf';
+    import PdfFactory from './../../../src/Pdf/PdfFactory';
     export default {
         props: ['data', 'index'],
         data() {
@@ -66,7 +66,9 @@ import { collect } from 'collect.js';
                     } */
                     console.log('data desde pedidoListCellPrint');
                     console.log(this.data);
-                    let pdf = new PedidoClientePdf();
+                    
+                    let pdf = this.PdfFactory.createInstance('PedidoClientePdf');
+                    
                     pdf.structure_scaffold(this.data);
 
                     setTimeout(()=>{

@@ -13,8 +13,6 @@
 <script>
 import collect from 'collect.js';
 import auth from './../../../../mixins/auth';
-import InvoiceA from './../../../../src/Pdf/Invoices/InvoiceA';
-import InvoiceB from './../../../../src/Pdf/Invoices/InvoiceB';
 import sale_invoice from './../../../../mixins/sale_invoice';
 import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTransformer';
 import FECAEDetRequestTransformer from './../../../../src/Transformers/Afip/WSFE/FECAEDetRequestTransformer'
@@ -24,6 +22,7 @@ import {mapGetters} from 'vuex';
         mixins : [auth, sale_invoice],
         data() {
             return {
+                PdfFactory : null,
                 spinner : false,
             }
         },
@@ -160,12 +159,12 @@ import {mapGetters} from 'vuex';
 
                         if (data.bill_type == 1 || data.bill_type == 2 || data.bill_type == 3) {
                             
-                            let pdf = new InvoiceA();
+                            let pdf = this.PdfFactory.createInstance('InvoiceA');
                             pdf.structure_scaffold(data);
                             pdf.print();
                         }else{
                             //InvoiceB funciona para las facturas B y C
-                            let pdf = new InvoiceB();
+                            let pdf = this.PdfFactory.createInstance('InvoiceA');
                             pdf.structure_scaffold(data);
                             pdf.print();
                         }
@@ -186,8 +185,8 @@ import {mapGetters} from 'vuex';
         },
 
         mounted() {
-            console.log('partial cell print invoice');
-           console.log(this.data);
+           
+           this.PdfFactory = new PdfFactory();
         },
        
     }

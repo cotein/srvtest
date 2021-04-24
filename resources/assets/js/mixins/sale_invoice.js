@@ -1,11 +1,9 @@
 import {mapGetters} from 'vuex';
 import {Event} from 'vue-tables-2';
-import InvoiceA from './../src/Pdf/Invoices/InvoiceA';
-import InvoiceB from './../src/Pdf/Invoices/InvoiceB';
-import InvoiceTransformer from './../src/Transformers/Afip/InvoiceTransformer'
-import FECAEDetRequestTransformer from './../src/Transformers/Afip/WSFE/FECAEDetRequestTransformer';
 import { collect } from 'collect.js';
 import toast_mixin from './toast-mixin';
+import InvoiceTransformer from './../src/Transformers/Afip/InvoiceTransformer'
+import FECAEDetRequestTransformer from './../src/Transformers/Afip/WSFE/FECAEDetRequestTransformer';
 export default {
     mixins : [toast_mixin],
     data() {
@@ -14,7 +12,8 @@ export default {
             ImpTotal : 0,
             Tributos : '',
             ImpTrib : 0,
-            spinner : false
+            spinner : false,
+            PdfFactory : null,
         }
     },
     methods: {
@@ -391,7 +390,7 @@ export default {
             data.text = ['ORIGINAL', 'DUPLICADO', 'TRIPLICADO'];
 
             if (this.BillCbteTipo == '001' || this.BillCbteTipo == '002' || this.BillCbteTipo == '003') {
-                let pdf = new InvoiceA();
+                let pdf = this.PdfFactory.createInstance('InvoiceA');
                 pdf.structure_scaffold(data);
     
                 this.$store.commit('SET_INITIAL_PRODUCTS');
@@ -399,7 +398,7 @@ export default {
     
                 pdf.print();
             }else{
-                let pdf = new InvoiceB();
+                let pdf = this.PdfFactory.createInstance('InvoiceB');
                 pdf.structure_scaffold(data);
     
                 this.$store.commit('SET_INITIAL_PRODUCTS');
@@ -446,6 +445,10 @@ export default {
         ]),
 
         
+    },
+
+    mounted() {
+        this.PdfFactory = new PdfFactory();
     },
 
 
