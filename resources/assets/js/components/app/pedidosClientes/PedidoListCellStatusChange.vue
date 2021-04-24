@@ -30,7 +30,8 @@
     import InvoiceA from './../../../src/Pdf/Invoices/InvoiceA';
     import InvoiceB from './../../../src/Pdf/Invoices/InvoiceB';
     import PedidoClienteTipoPersona from './PedidoClienteTipoPersona';
-    import PedidoClientePdf from './../../../src/Pdf/PedidoClientePdf';
+    //import PedidoClientePdf from './../../../src/Pdf/PedidoClientePdf';
+    import PdfFactory from './../../../src/Pdf/PdfFactory';
     import InvoiceTransformer from './../../../src/Transformers/Afip/InvoiceTransformer';
     import FECAEDetRequestTransformer from './../../../src/Transformers/Afip/WSFE/FECAEDetRequestTransformer';
     import CustomerSearchAfipData from './../../app/customers/CustomerSearchAfipData';
@@ -558,7 +559,8 @@
                 this.data.voucher = 'REMITO';
                 this.data.voucher_number = 'N° 0001-' + this.zeroLeft(this.data.id,8);
                 this.data.text = ['ORIGINAL', 'DUPLICADO', 'TRIPLICADO'];
-                let pdf = new PedidoClientePdf();
+                let factory = new PdfFactory();
+                let pdf = factory.createInstance('PedidoClientePdf');
                 console.log(this.data);
                 pdf.structure_scaffold(this.data);
                 pdf.print();
