@@ -15,7 +15,8 @@ class FactoryHook
     public function getInstance($wh)
     {
         Log::alert("getInstance");
-        $className = $this->classes[$wh->topic];
+        
+        $className =  "App\\Src\\Meli\\WebHooks" . $this->classes[$wh->topic];
         Log::alert($className);
 
         return new $className;
