@@ -24,6 +24,8 @@ class Message extends HookBase implements HookContract
             $user->updateDataWithRefreshToken($meli_data);
         }
         
+        Log::info('EN CLASS MESSAGE response handle');
+        
         $response = $this->notifications->notification_resource($user->company->mercadoLibre->meli_token, $wh->meli_info['topic'] . '/' .$wh->meli_info['resource']);
 
         $response = StdClassTool::toArray($response);
