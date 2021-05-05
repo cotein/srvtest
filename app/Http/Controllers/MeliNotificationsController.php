@@ -15,6 +15,7 @@ use App\Src\Models\WebHookQuestion;
 use App\Src\Models\WebHookResponse;
 use App\Src\Traits\DateFormatTrait;
 use Illuminate\Support\Facades\Log;
+use App\Src\Meli\WebHooks\FactoryHook;
 use App\Events\WebHookOrderWasReceived;
 use Illuminate\Support\Facades\Response;
 use App\Events\WebHookMessageWasReceived;
@@ -87,9 +88,15 @@ class MeliNotificationsController extends Controller
         $wh->save();
         $wh->refresh();
 
+        $factory = new FactoryHook;
+
+        $hook = $factory->getInstance($wh);
+
+        $hook->response_handle($wh);
+        
         if ($wh->topic == 'messages') {
             
-            $response = $this->notifications->notification_resource($user->company->mercadoLibre->meli_token, $wh->meli_info['topic'] . '/' .$wh->meli_info['resource']);
+            /* $response = $this->notifications->notification_resource($user->company->mercadoLibre->meli_token, $wh->meli_info['topic'] . '/' .$wh->meli_info['resource']);
 
             $response = StdClassTool::toArray($response);
 
@@ -134,8 +141,7 @@ class MeliNotificationsController extends Controller
             Log::info($response);
             Log::info('#########################################');
             Log::info('#########################################');
-            Log::info('#########################################');
-            //return Response::make('ok', 200);
+            Log::info('#########################################'); */
         }
         
         if ($wh->topic == 'questions') {
