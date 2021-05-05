@@ -64,7 +64,9 @@ class MeliNotificationsController extends Controller
             $user->updateDataWithRefreshToken($meli_data);
 
         }
-        //http_response_code(200);
+        
+        http_response_code(200);
+
         $data = request()->all();
 
         $wh = new WebHook;
@@ -125,7 +127,7 @@ class MeliNotificationsController extends Controller
             broadcast(new WebHookMessageWasReceived($msg));
 
             $this->save_response($response, $wh);
-            
+
             Log::info('#########################################');
             Log::info('############ NUEVO MENSAJE ################');
             Log::info('#########################################');
