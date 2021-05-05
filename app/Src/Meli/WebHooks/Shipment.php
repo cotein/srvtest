@@ -7,5 +7,7 @@ use App\Src\Meli\WebHooks\HookContract;
 
 class Shipment extends HookBase implements HookContract
 {
-    //
+    public function response_handle($wh){
+        
+    }
 }
