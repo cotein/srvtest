@@ -2,6 +2,8 @@
 
 namespace App\Src\Meli\WebHooks;
 
+use Illuminate\Support\Facades\Log;
+
 class FactoryHook
 {
     protected $classes = [
