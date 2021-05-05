@@ -102,14 +102,6 @@ class MeliNotificationsController extends Controller
             //return Response::make('ok', 200);
         }
 
-        if ($wh->topic == 'orders_v2' || $wh->topic == 'orders') {
-
-            
-            
-            //return Response::make('ok', 200);
-        }
-        
-        return Response::make('ok', 200);
     }
 }
 

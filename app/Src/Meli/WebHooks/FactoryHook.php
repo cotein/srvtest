@@ -9,7 +9,8 @@ class FactoryHook
     protected $classes = [
         'messages' => 'Message',
         'orders' => 'Order',
-        'orders_v2' => 'Order'
+        'orders_v2' => 'Order',
+        'payments' => 'Payment'
     ];
 
     public function getInstance($wh)
