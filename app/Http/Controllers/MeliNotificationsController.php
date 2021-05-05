@@ -86,13 +86,7 @@ class MeliNotificationsController extends Controller
         $wh->refresh();
 
         if ($wh->topic == 'messages') {
-            Log::info('#########################################');
-            Log::info('############ NUEVO MENSAJE ################');
-            Log::info('#########################################');
-            Log::info($response);
-            Log::info('#########################################');
-            Log::info('#########################################');
-            Log::info('#########################################');
+            
             $response = $this->notifications->notification_resource($user->company->mercadoLibre->meli_token, $wh->meli_info['topic'] . '/' .$wh->meli_info['resource']);
 
             $response = StdClassTool::toArray($response);
@@ -131,7 +125,14 @@ class MeliNotificationsController extends Controller
             broadcast(new WebHookMessageWasReceived($msg));
 
             $this->save_response($response, $wh);
-
+            
+            Log::info('#########################################');
+            Log::info('############ NUEVO MENSAJE ################');
+            Log::info('#########################################');
+            Log::info($response);
+            Log::info('#########################################');
+            Log::info('#########################################');
+            Log::info('#########################################');
             //return Response::make('ok', 200);
         }
         
