@@ -38,15 +38,6 @@ class MeliNotificationsController extends Controller
         $this->meli_user = new MeliUsers;
     }
 
-    public function save_response($response, $wh)
-    {
-        $whR = new WebHookResponse;
-        $whR->web_hook_id = $wh->id;
-        $whR->response = StdClassTool::toArray($response);
-        $whR->status_id = Status::NOTIFICACION_EN_PROCESO;       
-        $whR->save();
-    }
-
     public function web_hooks()
     {
         $user = User::find(1);
