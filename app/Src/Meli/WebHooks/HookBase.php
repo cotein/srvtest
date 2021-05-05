@@ -2,6 +2,7 @@
 
 namespace App\Src\Meli\WebHooks;
 
+use App\Src\Meli\MeliUsers;
 use App\Src\Meli\MeliNotifications;
 
 class HookBase 
@@ -11,5 +12,7 @@ class HookBase
     public function __construct()
     {
         $this->notifications = new MeliNotifications;
+
+        $this->meli_user = new MeliUsers;
     }
 }

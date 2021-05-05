@@ -50,20 +50,12 @@ class MeliNotificationsController extends Controller
     public function web_hooks()
     {
         $user = User::find(1);
-        /* Log::info('### Antes de  verify_expiration_time_token ###');
-            Log::info($meli_data);
-            Log::info('############'); */
         if($user->verify_expiration_time_token())
         {
 
             $meli_data = $this->meli_user->refresh_token($user->company->mercadoLibre->meli_refresh_token); 
             
-            /* Log::info('### TOKEN ACTUALIZADO ###');
-            Log::info($meli_data);
-            Log::info('############'); */
-            
             $user->updateDataWithRefreshToken($meli_data);
-
         }
         
         http_response_code(200);

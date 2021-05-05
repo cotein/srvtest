@@ -12,7 +12,9 @@ class FactoryHook
 
     public function getInstance($wh)
     {
+        Log::alert("getInstance");
         $className = $classes[$wh->topic];
+        Log::alert($className);
 
         return new $className;
     }
