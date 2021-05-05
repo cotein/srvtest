@@ -11,7 +11,8 @@ class FactoryHook
         'orders' => 'Order',
         'orders_v2' => 'Order',
         'payments' => 'Payment',
-        'shipments' => 'Shipment'
+        'shipments' => 'Shipment',
+        'items' => 'Shipment'
     ];
 
     public function getInstance($wh)
