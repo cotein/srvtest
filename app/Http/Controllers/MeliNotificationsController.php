@@ -49,8 +49,6 @@ class MeliNotificationsController extends Controller
             $user->updateDataWithRefreshToken($meli_data);
         }
         
-        http_response_code(200);
-
         $data = request()->all();
 
         $wh = new WebHook;
@@ -58,7 +56,6 @@ class MeliNotificationsController extends Controller
         $wh->save();
         $wh->refresh();
         
-        //$wh->_id = $wh->meli_info['_id'];
         $wh->application_id = $wh->meli_info['application_id'];
         $wh->user_id = $wh->meli_info['user_id'];
         $wh->resource = $wh->meli_info['resource'];
@@ -66,66 +63,17 @@ class MeliNotificationsController extends Controller
         $wh->sent = $wh->meli_info['sent'];
         $wh->received = $wh->meli_info['received'];
         $wh->attempts = $wh->meli_info['attempts'];
-        //$wh->created = $wh->meli_info['created_at'];
         $wh->status_id = Status::ACTIVO;
         $wh->save();
         $wh->refresh();
+
+        http_response_code(200);
 
         $factory = new FactoryHook;
 
         $hook = $factory->getInstance($wh);
 
         $hook->response_handle($wh);
-        
-        if ($wh->topic == 'messages') {
-            
-            /* $response = $this->notifications->notification_resource($user->company->mercadoLibre->meli_token, $wh->meli_info['topic'] . '/' .$wh->meli_info['resource']);
-
-            $response = StdClassTool::toArray($response);
-
-            $message = new WebHookMessages;
-            $message->message_id = (array_key_exists('message_id', $response['body'])) ? $response['body']['message_id'] : null; 
-            $message->send_user_id = (array_key_exists('send_user_id', $response['body'])) ? $response['body']['send_user_id'] : null; 
-            $message->send_user_email = (array_key_exists('send_user_email', $response['body'])) ? $response['body']['send_user_email'] : null; 
-            $message->receive_user_id = (array_key_exists('receive_user_id', $response['body'])) ? $response['body']['receive_user_id'] : null; 
-            $message->receive_user_email = (array_key_exists('receive_user_email', $response['body'])) ? $response['body']['receive_user_email'] : null; 
-            $message->text = (array_key_exists('text', $response['body'])) ? is_array($response['body']['text'])? json_encode($response['body']['text']) : $response['body']['text'] : null;
-            $message->plain = (array_key_exists('plain', $response['body'])) ? $response['body']['plain'] : null; 
-            $message->status = (array_key_exists('status', $response['body'])) ? $response['body']['status'] : null; 
-            $message->site_id = (array_key_exists('site_id', $response['body'])) ? $response['body']['site_id'] : null; 
-            $message->date = (array_key_exists('date', $response['body'])) ? $response['body']['date'] : null; 
-            $message->date_created = (array_key_exists('date_created', $response['body'])) ? $response['body']['date_created'] : null; 
-            $message->date_received = (array_key_exists('date_received', $response['body'])) ? $response['body']['date_received'] : null; 
-            $message->date_available = (array_key_exists('date_available', $response['body'])) ? $response['body']['date_available'] : null; 
-            $message->date_notified = (array_key_exists('date_notified', $response['body'])) ? $response['body']['date_notified'] : null; 
-            $message->date_read = (array_key_exists('date_read', $response['body'])) ? $response['body']['date_read'] : null; 
-            $message->from = (array_key_exists('from', $response['body'])) ? is_array($response['body']['from'])? json_encode($response['body']['from']) : $response['body']['from'] : null;
-            $message->to = (array_key_exists('to', $response['body'])) ? is_array($response['body']['to'])? json_encode($response['body']['to']) : $response['body']['to'] : null;
-            $message->moderation = (array_key_exists('moderation', $response['body'])) ? is_array($response['body']['moderation'])? json_encode($response['body']['moderation']) : $response['body']['moderation'] : null;
-            $message->hold = (array_key_exists('hold', $response['body'])) ? $response['body']['hold'] : null; 
-            $message->answer = (array_key_exists('answer', $response['body'])) ? $response['body']['answer'] : null; 
-            $message->name = (array_key_exists('name', $response['body'])) ? $response['body']['name'] : null; 
-            $message->subject = (array_key_exists('subject', $response['body'])) ? $response['body']['subject'] : null; 
-            $message->resource = (array_key_exists('resource', $response['body'])) ? $response['body']['resource'] : null; 
-            $message->resource_id = (array_key_exists('resource_id', $response['body'])) ? $response['body']['resource_id'] : null; 
-            $message->client_id = (array_key_exists('client_id', $response['body'])) ? $response['body']['client_id'] : null; 
-            $message->status_id = Status::NOTIFICACION_EN_PROCESO;
-            $message->save();
-            
-            $msg =  fractal($message, new WebHookMessageTransformer())->toArray()['data'];
-
-            broadcast(new WebHookMessageWasReceived($msg));
-
-            $this->save_response($response, $wh);
-
-            Log::info('#########################################');
-            Log::info('############ NUEVO MENSAJE ################');
-            Log::info('#########################################');
-            Log::info($response);
-            Log::info('#########################################');
-            Log::info('#########################################');
-            Log::info('#########################################'); */
-        }
         
         if ($wh->topic == 'questions') {
 
@@ -156,78 +104,7 @@ class MeliNotificationsController extends Controller
 
         if ($wh->topic == 'orders_v2' || $wh->topic == 'orders') {
 
-            $response = $this->notifications->notification_resource($user->company->mercadoLibre->meli_token, $wh->resource);
-            Log::info('#########################################');
-            Log::info('############ NUEVA ORDEN ################');
-            Log::info('#########################################');
-            Log::info($response);
-            Log::info('#########################################');
-            Log::info('#########################################');
-            Log::info('#########################################');
-            $ord = StdClassTool::toArray($response['body']);
-
-            $wh_prueba = new WebHook;
-            $wh_prueba->meli_info = $ord;
-            $wh_prueba->save();
-            $wh_prueba->refresh();
-
-            $customer_id = null;
-
-            $cstmr = Customer::where('meli_id', $ord['buyer']['id'])->get();
-
-            if ($cstmr->isEmpty()) {
-
-                $phone = (array_key_exists('phone', $ord['buyer'])) ? $ord['buyer']['phone']['area_code'] . ' '. $ord['buyer']['phone']['number'] : 'Sin informar';
-                
-                $customer = new Customer;
-                $customer->name = $ord['buyer']['last_name'] . ' ' . $ord['buyer']['first_name'];
-                $customer->meli_nick = $ord['buyer']['nickname'];
-                $customer->meli_id = $ord['buyer']['id'];
-                $customer->email = $ord['buyer']['email'];
-                $customer->number = $ord['buyer']['billing_info']['doc_number'];
-                $customer->phone_1 = $phone;
-                
-                $customer->save();
-
-                $customer_id = $customer->id;
-                
-            }else{
-
-                $customer_id = $cstmr->first()->id;
-            }
-
-            sleep(1);
-
-            $or = PedidoCliente::where('meli_id', $ord['id'])->get();
-
-            if ($or->isEmpty()) {
-
-                $pc = new PedidoCliente;
-                $pc->customer_id = $customer_id;
-                $pc->meli_id = $ord['id'];
-                $pc->is_meli_order = true;
-                $pc->meli_data = $ord;
-                $pc->status_id = Status::PENDIENTE;
-                $pc->user_id = 999999; //AUTOMATICO
-                $pc->save();
-                $pc->code = 'PD-' . $this->createDate($ord['date_created']) . '-' . $pc->customer_id . '-' . $pc->id;
-                $pc->number = $pc->id;
-                $pc->save();
-
-                $pc->refresh();
-                
-                $pedido = fractal($pc, new PedidoClienteListTransformer())->toArray()['data'];
-                $pedido['now'] = true;
-                broadcast(new WebHookOrderWasReceived($pedido));
-
-            }else{
-                Log::info('############## LA ORDEN YA EXISTIA ###########################');
-                Log::info(gettype($or));
-                Log::info($or);
-                Log::info('#########################################');
-            }
-
-            $this->save_response($response, $wh);
+            
             
             //return Response::make('ok', 200);
         }
