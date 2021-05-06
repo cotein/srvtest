@@ -148,7 +148,7 @@ class User extends Authenticatable implements HasMediaConversions, HasRolesContr
     {
         $this->company->mercadoLibre->update(['meli_token' => $data->access_token]);
         $this->company->mercadoLibre->update(['meli_refresh_token' => $data->refresh_token]);
-        $this->company->mercadoLibre->update(['meli_token_expiration_time' => $this->expiration_time($meli_user['expires_in'])]);
+        $this->company->mercadoLibre->update(['meli_token_expiration_time' => $this->expiration_time($data->expires_in)]);
 
         return $this;
     }
