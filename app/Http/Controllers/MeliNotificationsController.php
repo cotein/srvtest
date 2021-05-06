@@ -70,7 +70,7 @@ class MeliNotificationsController extends Controller
         Log::alert("htttttptptptptptp");
         Log::alert(file_get_contents('php://input'));
         Log::alert("htttttptptptptptp");
-        http_response_code(200);
+        //http_response_code(200);
         header("HTTP/1.1 200 OK");
         $factory = new FactoryHook;
 
