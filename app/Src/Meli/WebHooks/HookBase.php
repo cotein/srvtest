@@ -7,9 +7,12 @@ use App\Src\Meli\MeliUsers;
 use App\Src\Tools\StdClassTool;
 use App\Src\Meli\MeliNotifications;
 use App\Src\Models\WebHookResponse;
+use App\Src\Traits\DateFormatTrait;
 
 class HookBase 
 {
+    use DateFormatTrait;
+    
     protected $notifications;
 
     public function __construct()
