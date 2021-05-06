@@ -41,6 +41,7 @@ class MeliNotificationsController extends Controller
     public function web_hooks()
     {
         $user = User::find(1);
+
         if($user->verify_expiration_time_token())
         {
 
@@ -51,6 +52,16 @@ class MeliNotificationsController extends Controller
         
         $data = request()->all();
 
+        usleep( 200 * 1000 );
+
+        Log::alert("htttttptptptptptp");
+        Log::alert(file_get_contents('php://input'));
+        Log::alert("htttttptptptptptp");
+        //http_response_code(200);
+        header("HTTP/1.1 200 OK");
+
+        usleep( 200 * 1000 );
+        
         $wh = new WebHook;
         $wh->meli_info = $data;
         $wh->save();
@@ -67,18 +78,11 @@ class MeliNotificationsController extends Controller
         $wh->save();
         $wh->refresh();
 
-        
         $factory = new FactoryHook;
 
         $hook = $factory->getInstance($wh);
 
         $hook->response_handle($wh);
-        
-        Log::alert("htttttptptptptptp");
-        Log::alert(file_get_contents('php://input'));
-        Log::alert("htttttptptptptptp");
-        //http_response_code(200);
-        header("HTTP/1.1 200 OK");
         
         if ($wh->topic == 'questions') {
 
@@ -104,7 +108,6 @@ class MeliNotificationsController extends Controller
 
             $this->save_response($response, $wh);
 
-            //return Response::make('ok', 200);
         }
 
     }
