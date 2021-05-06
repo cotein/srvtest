@@ -72,8 +72,24 @@ class Order extends HookBase implements HookContract
         sleep(1);
 
         $or = PedidoCliente::where('meli_id', $ord['id'])->get();
+        $pc = new PedidoCliente;
+            $pc->customer_id = $customer_id;
+            $pc->meli_id = $ord['id'];
+            $pc->is_meli_order = true;
+            $pc->meli_data = $ord;
+            $pc->status_id = Status::PENDIENTE;
+            $pc->user_id = 999999; //AUTOMATICO
+            $pc->save();
+            $pc->code = 'PD-' . $this->createDate($ord['date_created']) . '-' . $pc->customer_id . '-' . $pc->id;
+            $pc->number = $pc->id;
+            $pc->save();
 
-        if ($or->isEmpty()) {
+            $pc->refresh();
+            
+            $pedido = fractal($pc, new PedidoClienteListTransformer())->toArray()['data'];
+            $pedido['now'] = true;
+            broadcast(new WebHookOrderWasReceived($pedido));
+        /* if ($or->isEmpty()) {
 
             $pc = new PedidoCliente;
             $pc->customer_id = $customer_id;
@@ -98,7 +114,7 @@ class Order extends HookBase implements HookContract
             Log::info(gettype($or));
             Log::info($or);
             Log::info('#########################################');
-        }
+        } */
 
         $this->save_response($response, $wh);
     }
