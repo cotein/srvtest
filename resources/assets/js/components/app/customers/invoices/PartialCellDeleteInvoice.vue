@@ -14,16 +14,14 @@
 import {mapGetters} from 'vuex';
 import collect from 'collect.js';
 import auth from './../../../../mixins/auth';
-import PdfFactory from './../../../../src/Pdf/PdfFactory';
+import pdf from './../../../../mixins/FactoryPdfMixin';
 import sale_invoice from './../../../../mixins/sale_invoice';
 import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTransformer';
 import FECAEDetRequestTransformer from './../../../../src/Transformers/Afip/WSFE/FECAEDetRequestTransformer'
 
-const Pdf = new PdfFactory;
-
     export default {
         props: ['data', 'index'],
-        mixins : [auth, sale_invoice],
+        mixins : [auth, sale_invoice, pdf],
         data() {
             return {
                 spinner : false,

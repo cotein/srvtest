@@ -1,13 +1,7 @@
-import PdfFactory from './../src/Pdf/'
+import PdfFactory from './../src/Pdf/PdfFactory';
+
+const Pdf = new PdfFactory;
+
 export default {
-
-    data(){
-        return {
-            PdfFactory : null,
-        }
-    },
-
-    mounted() {
-        this.PdfFactory = new PdfFactory();
-    },
+    
 }
