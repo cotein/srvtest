@@ -62,6 +62,8 @@ class WSFEController extends Controller
         $date = $this->change_divider_slash($req['FECAEDetRequest']['CbteFch']);
         
         $req['FECAEDetRequest']['DocNro'] = (double) $req['FECAEDetRequest']['DocNro'];
+        
+        $FchVtoPago = $req['FECAEDetRequest']['FchVtoPago'];
 
         if ($req['FECAEDetRequest']['Concepto'] == 1) {
             $req['FECAEDetRequest']['FchVtoPago'] = '';
@@ -84,6 +86,8 @@ class WSFEController extends Controller
                 if ($req['FeCabReq']['CbteTipo'] == '007')  $req['FeCabReq']['CbteTipo'] = '207';  
                 if ($req['FeCabReq']['CbteTipo'] == '008')  $req['FeCabReq']['CbteTipo'] = '208';  
 
+                $req['FECAEDetRequest']['FchVtoPago'] = $FchVtoPago;
+
                 $req = $this->wsFeCred->setOpcional($req);
 
                 $result = $this->wsfe->ultimoAutorizado(6, $req['FeCabReq']['CbteTipo']);
@@ -92,12 +96,6 @@ class WSFEController extends Controller
                 
                 $req['FECAEDetRequest']['CbteDesde'] = $num['FECompUltimoAutorizadoResult']['CbteNro'] + 1;
                 $req['FECAEDetRequest']['CbteHasta'] = $num['FECompUltimoAutorizadoResult']['CbteNro'] + 1; 
-
-                /* if ($req['FeCabReq']['CbteTipo'] == '001' || $req['FeCabReq']['CbteTipo'] == '006' || $req['FeCabReq']['CbteTipo'] == '011') {
-                    $req['FECAEDetRequest']['FchVtoPago'] = '';
-                } */
-
-                //dd($req);
             }
         }
 
