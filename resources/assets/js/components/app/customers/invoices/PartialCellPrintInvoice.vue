@@ -19,6 +19,9 @@ import {mapGetters} from 'vuex';
 import PdfFactory from './../../../../src/Pdf/FactoryPdf';
 import PartialCellDeleteInvoice  from './PartialCellDeleteInvoice';
 import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTransformer';
+
+const Pdf = new PdfFactory;
+
     export default {
         props: ['data', 'index'],
         components : {
@@ -28,7 +31,6 @@ import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTrans
             return {
                 token : null,
                 print_spinner : false,
-                PdfFactory : null,
             }
         },
 
@@ -83,12 +85,12 @@ import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTrans
                             data.bill_type == 94
                             ) {
                             
-                            let pdf = this.PdfFactory.createInstance('InvoiceA');
+                            let pdf = Pdf.createInstance('InvoiceA');
                             pdf.structure_scaffold(data);
                             pdf.print();
                         }else{
                             //InvoiceB funciona para las facturas B y C
-                            let pdf = this.PdfFactory.createInstance('InvoiceB');
+                            let pdf = Pdf.createInstance('InvoiceB');
                             pdf.structure_scaffold(data);
                             pdf.print();
                         }
@@ -108,10 +110,5 @@ import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTrans
                 'GetCompany'
             ])
         },
-
-        mounted() {
-           this.PdfFactory = new PdfFactory();
-        },
-       
     }
 </script>
