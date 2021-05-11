@@ -11,13 +11,16 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import collect from 'collect.js';
 import auth from './../../../../mixins/auth';
 import PdfFactory from './../../../../src/Pdf/PdfFactory';
 import sale_invoice from './../../../../mixins/sale_invoice';
 import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTransformer';
 import FECAEDetRequestTransformer from './../../../../src/Transformers/Afip/WSFE/FECAEDetRequestTransformer'
-import {mapGetters} from 'vuex';
+
+const Pdf = new PdfFactory;
+
     export default {
         props: ['data', 'index'],
         mixins : [auth, sale_invoice],
@@ -160,12 +163,12 @@ import {mapGetters} from 'vuex';
 
                         if (data.bill_type == 1 || data.bill_type == 2 || data.bill_type == 3) {
                             
-                            let pdf = this.PdfFactory.createInstance('InvoiceA');
+                            let pdf = Pdf.createInstance('InvoiceA');
                             pdf.structure_scaffold(data);
                             pdf.print();
                         }else{
                             //InvoiceB funciona para las facturas B y C
-                            let pdf = this.PdfFactory.createInstance('InvoiceA');
+                            let pdf = Pdf.createInstance('InvoiceA');
                             pdf.structure_scaffold(data);
                             pdf.print();
                         }
@@ -185,10 +188,5 @@ import {mapGetters} from 'vuex';
             ])
         },
 
-        mounted() {
-           
-           this.PdfFactory = new PdfFactory();
-        },
-       
     }
 </script>
