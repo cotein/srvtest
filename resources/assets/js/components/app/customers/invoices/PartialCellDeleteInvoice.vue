@@ -26,7 +26,6 @@ const Pdf = new PdfFactory;
         mixins : [auth, sale_invoice],
         data() {
             return {
-                PdfFactory : null,
                 spinner : false,
             }
         },
@@ -176,7 +175,6 @@ const Pdf = new PdfFactory;
                     },1500);
                     
                 });
-
             }
         },
 
