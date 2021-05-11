@@ -13,6 +13,7 @@
 <script>
 import collect from 'collect.js';
 import auth from './../../../../mixins/auth';
+import PdfFactory from './../../../../src/Pdf/PdfFactory';
 import sale_invoice from './../../../../mixins/sale_invoice';
 import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTransformer';
 import FECAEDetRequestTransformer from './../../../../src/Transformers/Afip/WSFE/FECAEDetRequestTransformer'
