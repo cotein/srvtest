@@ -25,23 +25,21 @@
     import {Event} from 'vue-tables-2';
     import auth from './../../../mixins/auth';
     import sleep from './../../../mixins/sleep-mixin';
-    import PdfFactory from './../../../src/Pdf/PdfFactory';
     import toast_mixin from './../../../mixins/toast-mixin';
     import * as constants from './../../../src/const/Status';
     import PedidoClienteTipoPersona from './PedidoClienteTipoPersona';
     import InvoiceTransformer from './../../../src/Transformers/Afip/InvoiceTransformer';
     import FECAEDetRequestTransformer from './../../../src/Transformers/Afip/WSFE/FECAEDetRequestTransformer';
     import CustomerSearchAfipData from './../../app/customers/CustomerSearchAfipData';
-
+    import pdf from './../../../mixins/FactoryPdfMixin';
     export default {
         props: ['data'],
         components:{
             CustomerSearchAfipData, PedidoClienteTipoPersona
         },
-        mixins : [auth, toast_mixin, sleep],
+        mixins : [auth, toast_mixin, sleep, pdf],
         data() {
             return {
-                PdfFactory : null,
                 spinner : null,
                 status_pedido_cliente : null,
                 bill_type : 'F',
@@ -557,7 +555,7 @@
                 this.data.voucher = 'REMITO';
                 this.data.voucher_number = 'N° 0001-' + this.zeroLeft(this.data.id,8);
                 this.data.text = ['ORIGINAL', 'DUPLICADO', 'TRIPLICADO'];
-                let pdf = this.PdfFactory.createInstance('PedidoClientePdf');
+                let pdf = Pdf.createInstance('PedidoClientePdf');
                 console.log(this.data);
                 pdf.structure_scaffold(this.data);
                 pdf.print();
@@ -690,11 +688,11 @@
                 console.log('##############  DATA PDF ##########');
 
                 if (this.cbte_tipo == '001' || this.cbte_tipo == '002' || this.cbte_tipo == '003' || this.cbte_tipo == '201'){
-                    let pdf = this.PdfFactory.createInstance('InvoiceA');
+                    let pdf = Pdf.createInstance('InvoiceA');
                     pdf.structure_scaffold(data);
                     pdf.print();
                 }else{
-                    let pdf = this.PdfFactory.createInstance('InvoiceB');
+                    let pdf = Pdf.createInstance('InvoiceB');
                     pdf.structure_scaffold(data); 
                     pdf.print();
                 }
@@ -857,7 +855,6 @@
                 }
             });
 
-            this.PdfFactory = new PdfFactory();
         },
         computed : {
             ...mapGetters([
