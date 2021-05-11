@@ -13,7 +13,6 @@ export default {
             Tributos : '',
             ImpTrib : 0,
             spinner : false,
-            PdfFactory : null,
         }
     },
     methods: {
@@ -446,11 +445,4 @@ export default {
 
         
     },
-
-    mounted() {
-        this.PdfFactory = new PdfFactory();
-    },
-
-
-
 }

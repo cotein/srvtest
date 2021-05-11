@@ -16,11 +16,11 @@
 <script>
 
 import {mapGetters} from 'vuex';
-import PdfFactory from './../../../../src/Pdf/PdfFactory';
+//import PdfFactory from './../../../../src/Pdf/PdfFactory';
 import PartialCellDeleteInvoice  from './PartialCellDeleteInvoice';
 import InvoiceTransformer from './../../../../src/Transformers/Afip/InvoiceTransformer';
 
-const Pdf = new PdfFactory;
+//const Pdf = new PdfFactory;
 
     export default {
         props: ['data', 'index'],

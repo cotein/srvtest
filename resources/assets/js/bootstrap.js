@@ -55,14 +55,18 @@ if (window.location.hostname == 'piamond.sytes.net' || window.location.hostname 
 if (window.location.hostname == 'srvtest.com.ar' || window.location.hostname == 'www.srvtest.com.ar' || window.location.hostname == 'www.srvtest.sytes.net' || window.location.hostname == 'srvtest.sytes.net') {
     key = 'd87e7715910de32f47e3';
 }
-console.log('#######################################################################');
+/* console.log('#######################################################################');
 console.log('process.env.MIX_PUSHER_APP_KEY: ' + key);
 console.log('window.location.hostname: ' + window.location.hostname);
-console.log('#######################################################################');
+console.log('#######################################################################'); */
+
 window.Echo = new Echo({
     broadcaster : 'pusher',
     key : key,
     cluster : 'us2',
     encrypted : true
-})
+});
+
+import FactoryPdf from './src/Pdf/PdfFactory';
+const Pdf = new FactoryPdf;
 
