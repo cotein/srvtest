@@ -157,8 +157,6 @@ const Pdf = new PdfFactory;
                     
                     data.company = this.GetCompany
                     
-                    
-                    
                     setTimeout(()=>{
 
                         if (data.bill_type == 1 || data.bill_type == 2 || data.bill_type == 3) {
@@ -187,6 +185,5 @@ const Pdf = new PdfFactory;
                 'GetCompany'
             ])
         },
-
     }
 </script>
